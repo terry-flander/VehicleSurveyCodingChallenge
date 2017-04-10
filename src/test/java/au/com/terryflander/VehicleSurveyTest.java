@@ -111,13 +111,13 @@ public class VehicleSurveyTest {
     vs.loadSummary("AM_PM", false);
     vs.saveResults("output","test_am_pm.csv");
     vs.loadSummary("HOUR", false);
-    vs.saveResults("output","test_hour.csv");
+    vs.saveResults("output","test_1_hour.csv");
     vs.loadSummary("HALF_HOUR", false);
     vs.saveResults("output","test_half_hour.csv");
     vs.loadSummary("TWENTY_MINUTES", false);
-    vs.saveResults("output","test_twenty_minutes.csv");
+    vs.saveResults("output","test_20_minutes.csv");
     vs.loadSummary("FIFTEEN_MINUTES", false);
-    vs.saveResults("output","test_fifteen_minutes.csv");
+    vs.saveResults("output","test_15_minutes.csv");
     ArrayList<VehicleSurvey.CountSummary> summary = vs.getCountSummary();
     int btotal = 0;
     for (int i=0; i< summary.size(); i++) {
