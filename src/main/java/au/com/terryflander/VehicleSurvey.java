@@ -446,7 +446,7 @@ public class VehicleSurvey {
       } else {
         elapsed = nextTime - this.eventTime;
       }
-      this.separation = this.speed * elapsed / 3600;
+      this.separation = ((this.speed * 1000) / 3600) * (elapsed / 3600);
     }
   }
 
