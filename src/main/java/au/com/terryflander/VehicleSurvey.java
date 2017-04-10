@@ -24,26 +24,27 @@ public class VehicleSurvey {
   private static ArrayList<CountSummary> countSummary;
 
   public static void main( String[] args ) {
-    if (args.length != 2) {
-      System.err.println("VehicleSummary usage: <input-file> <output-directory>");
+    if (args.length < 2) {
+      System.err.println("VehicleSummary usage: <load-file> <save-directory> [average]");
       System.exit(1);
     } else {
       VehicleSurvey vs = new VehicleSurvey();
-      System.out.println("arg0='"+args[0]+"' arg1='"+args[1]+"'");
       String loadFile = args[0];
-      String saveDir = args[1];
+      String saveDirectory = args[1];
+      boolean average = args.length == 3?true:false;
+      System.out.println("loadFile='"+loadFile+"' saveDir='"+saveDirectory+"' average="+average);
       vs.init(loadFile);
       if (counterEvents!=null && counterEvents.size() > 0) {
-        vs.loadSummary("AM_PM", false);
-        vs.saveResults(saveDir,"stats_am_pm.csv");
-        vs.loadSummary("HOUR", false);
-        vs.saveResults(saveDir, "stats_1_hour.csv");
-        vs.loadSummary("HALF_HOUR", false);
-        vs.saveResults(saveDir,"stats_half_hour.csv");
-        vs.loadSummary("TWENTY_MINUTES", false);
-        vs.saveResults(saveDir, "stats_20_minutes.csv");
-        vs.loadSummary("FIFTEEN_MINUTES", false);
-        vs.saveResults(saveDir, "stats_15_minutes.csv");
+        vs.loadSummary("AM_PM", average);
+        vs.saveResults(saveDirectory,"stats_am_pm.csv");
+        vs.loadSummary("HOUR", average);
+        vs.saveResults(saveDirectory, "stats_1_hour.csv");
+        vs.loadSummary("HALF_HOUR", average);
+        vs.saveResults(saveDirectory,"stats_half_hour.csv");
+        vs.loadSummary("TWENTY_MINUTES", average);
+        vs.saveResults(saveDirectory, "stats_20_minutes.csv");
+        vs.loadSummary("FIFTEEN_MINUTES", average);
+        vs.saveResults(saveDirectory, "stats_15_minutes.csv");
       }
     }
 
@@ -163,19 +164,19 @@ public class VehicleSurvey {
         ArrayList<PeriodData> periodData = getPeriodData("A", period, String.valueOf(day + 1));
         int offset = (day * periodData.size());
         for (int i = 0; i<periodData.size(); i++) {
-          getSummary(offset, i, day, thisPeriod).setSouthCount(periodData.get(i).getCount());
-          getSummary(offset, i, day, thisPeriod).addSouthSpeed(periodData.get(i).getSpeed());
-          getSummary(offset, i, day, thisPeriod).addSouthSeparation(periodData.get(i).getSeparation());
-          getSummary(offset, i, day, thisPeriod).setSouthPeak(periodData.get(i).getPeak());
+          getSummary(offset, i, day, average, thisPeriod).addSouthCount(periodData.get(i).getCount());
+          getSummary(offset, i, day, average, thisPeriod).addSouthSpeed(periodData.get(i).getSpeed());
+          getSummary(offset, i, day, average, thisPeriod).addSouthSeparation(periodData.get(i).getSeparation());
+          getSummary(offset, i, day, average, thisPeriod).setSouthPeak(periodData.get(i).getPeak());
         }
 
         periodData = getPeriodData("B", period, String.valueOf(day + 1));
         offset = (day * periodData.size());
         for (int i = 0; i<periodData.size(); i++) {
-          getSummary(offset, i, day, thisPeriod).setNorthCount(periodData.get(i).getCount());
-          getSummary(offset, i, day, thisPeriod).addNorthSpeed(periodData.get(i).getSpeed());
-          getSummary(offset, i, day, thisPeriod).addNorthSeparation(periodData.get(i).getSeparation());
-          getSummary(offset, i, day, thisPeriod).setNorthPeak(periodData.get(i).getPeak());
+          getSummary(offset, i, day, average, thisPeriod).addNorthCount(periodData.get(i).getCount());
+          getSummary(offset, i, day, average, thisPeriod).addNorthSpeed(periodData.get(i).getSpeed());
+          getSummary(offset, i, day, average, thisPeriod).addNorthSeparation(periodData.get(i).getSeparation());
+          getSummary(offset, i, day, average, thisPeriod).setNorthPeak(periodData.get(i).getPeak());
         }
       }
 
@@ -185,8 +186,10 @@ public class VehicleSurvey {
           CountSummary cs = countSummary.get(i);
           cs.setNorthCount(cs.getNorthCount() / numDays);
           cs.setSouthCount(cs.getSouthCount() / numDays);
-          cs.setNorthSpeed(cs.getNorthSpeed() / numDays);
-          cs.setSouthSpeed(cs.getSouthSpeed() / numDays);
+          cs.setNorthSpeed(cs.getNorthSpeedRaw() / numDays);
+          cs.setSouthSpeed(cs.getSouthSpeedRaw() / numDays);
+          cs.setNorthSeparation(cs.getNorthSeparationRaw() / numDays);
+          cs.setSouthSeparation(cs.getSouthSeparationRaw() / numDays);
         }
       }
     } else {
@@ -194,11 +197,11 @@ public class VehicleSurvey {
     }
   }
 
-  private CountSummary getSummary(int offset, int i, int day, CountPeriod thisPeriod) {
-    if (countSummary.size() < offset + i + 1) {
-      countSummary.add(offset + i, new CountSummary(day, calculateHour(thisPeriod.minutesPerPeriod, i), calculateMinute(thisPeriod.minutesPerPeriod, i)));
+  private CountSummary getSummary(int offset, int i, int day, boolean average, CountPeriod thisPeriod) {
+    if (countSummary.size() < (average?0:offset) + i + 1) {
+      countSummary.add(offset + i, new CountSummary(average?0:day, calculateHour(thisPeriod.minutesPerPeriod, i), calculateMinute(thisPeriod.minutesPerPeriod, i)));
     }
-    return countSummary.get(offset + i);
+    return countSummary.get((average?0:offset) + i);
   }
 
   private boolean includeInCount(String selectDays, int dayNumber) {
@@ -534,8 +537,16 @@ public class VehicleSurvey {
       this.northCount = northCount;
     }
 
+    public void addNorthCount(int northCount) {
+      this.northCount += northCount;
+    }
+
     public void setSouthCount(int southCount) {
       this.southCount = southCount;
+    }
+
+    public void addSouthCount(int southCount) {
+      this.southCount += southCount;
     }
 
     public double getNorthSpeed() {
@@ -544,6 +555,14 @@ public class VehicleSurvey {
 
     public double getSouthSpeed() {
       return this.southSpeed / (this.southCount!=0?this.southCount:1);
+    }
+
+    public double getNorthSpeedRaw() {
+      return this.northSpeed;
+    }
+
+    public double getSouthSpeedRaw() {
+      return this.southSpeed;
     }
 
     public void addNorthSpeed(double northSpeed) {
@@ -568,6 +587,14 @@ public class VehicleSurvey {
 
     public double getSouthSeparation() {
       return this.southSeparation / (this.southCount!=0?this.southCount:1);
+    }
+
+    public double getNorthSeparationRaw() {
+      return this.northSeparation;
+    }
+
+    public double getSouthSeparationRaw() {
+      return this.southSeparation;
     }
 
     public void addNorthSeparation(double northSeparation) {

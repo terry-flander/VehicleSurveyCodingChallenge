@@ -103,7 +103,7 @@ public class VehicleSurveyTest {
     for (int i=0; i< summary.size(); i++) {
       btotal += summary.get(i).getNorthCount();
     }
-    Assert.assertEquals(2252, btotal);
+    Assert.assertEquals(2254, btotal);
   }
 
   @Test
