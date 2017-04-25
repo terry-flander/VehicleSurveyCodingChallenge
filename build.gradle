@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'checkstyle'
+
+group = 'au.com.terryflander'
+version = '1.0'
+
+description = """vehicleSurvey"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+checkstyle {
+    config = resources.text.fromFile('checkstyle.xml', 'UTF-8')
+    showViolations = true
+    ignoreFailures = false
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+repositories {
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}

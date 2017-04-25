@@ -1,7 +1,7 @@
 # Vehicle Summary Coding Challenge
 ## Aconex -- Terry Flander
 
-The application VehicleSurveyCodingChallenge is designed to take as its input Vehicle Counter data in the format where the first character of the input is the hose which was triggered ("A" or "B") followed by a timecode which is the numbe of miliseconds from midnight.
+The application VehicleSurveyCodingChallenge is designed to take as its input Vehicle Counter data in the format where the first character of the input is the hose which was triggered ("A" or "B") followed by a timecode which is the number of milliseconds from midnight.
 
 ## Install
 
@@ -31,4 +31,4 @@ The application expects at least two arguments: Input file name (including relat
 E.g.
 * mvn exec:java -Dexec.args="Vehicle_Survey_Coding_Challenge_sample_data.txt tmp"
 
-This will run the VehicledSurveyCodingChallenge main class and produce output CSV files the Output directory 'tmp'. As this file is identical to the original test data, the output in that directory should match the output created during 'test' processing in the 'output' directory.
+This will run the VehicleSurveyCodingChallenge main class and produce output CSV files the Output directory 'tmp'. As this file is identical to the original test data, the output in that directory should match the output created during 'test' processing in the 'output' directory.

@@ -1,16 +1,14 @@
 package au.com.terryflander;
 
+import au.com.terryflander.ReportSummary.CountSummary;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 import java.util.ArrayList;
 
-/**
- * Unit test for simple App.
- */
 public class VehicleSurveyTest {
 
-  VehicleSurvey vs;
+  private VehicleSurvey vs;
 
   @Before
   public void initialize() {
@@ -50,8 +48,12 @@ public class VehicleSurveyTest {
 
   @Test
   public final void whenNorthCarTotalIsCorrectAllDays() {
-    Assert.assertEquals(11276, vs.countPerPeriod("B", "AM_PM", "*")[0]
-        + vs.countPerPeriod("B", "AM_PM", "*")[1]);
+    int summary[] = vs.countPerPeriod("B", "AM_PM", "*");
+    int total = 0;
+    for (int aSummary : summary) {
+      total += aSummary;
+    }
+    Assert.assertEquals(11276, total);
   }
 
   @Test
@@ -61,7 +63,7 @@ public class VehicleSurveyTest {
 
   @Test
   public final void whenSouthCarAmDay1CountIsCorrect() {
-    Assert.assertEquals(1264, vs.countPerPeriod("A", "AM_PM", "1")[0]);
+    Assert.assertEquals(1264, vs.countPerPeriod("A", "AM_PM", "*")[0]);
   }
 
   @Test
@@ -75,35 +77,35 @@ public class VehicleSurveyTest {
   }
 
   @Test
-  public final void whenVehicleCountTwentyMinutsAreCorrect() {
+  public final void whenVehicleCountTwentyMinutesAreCorrect() {
     Assert.assertEquals(3*24, vs.countPerPeriod("A", "TWENTY_MINUTES", "1").length);
   }
 
   @Test
-  public final void whenVehicleCountFifteenMinutsAreCorrect() {
+  public final void whenVehicleCountFifteenMinutesAreCorrect() {
     Assert.assertEquals(4*24, vs.countPerPeriod("A", "FIFTEEN_MINUTES", "1").length);
   }
 
   @Test
   public final void whenNorthCarSummaryIsCorrectAllDays() {
     vs.loadSummary("AM_PM", false);
-    ArrayList<VehicleSurvey.CountSummary> summary = vs.getCountSummary();
-    int btotal = 0;
-    for (int i=0; i< summary.size(); i++) {
-      btotal += summary.get(i).getNorthCount();
+    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    int total = 0;
+    for (CountSummary aSummary : summary) {
+      total += aSummary.getNorthCount();
     }
-    Assert.assertEquals(11276, btotal);
+    Assert.assertEquals(11276, total);
   }
 
   @Test
   public final void whenNorthCarSummaryAverageIsCorrectAllDays() {
     vs.loadSummary("AM_PM", true);
-    ArrayList<VehicleSurvey.CountSummary> summary = vs.getCountSummary();
-    int btotal = 0;
-    for (int i=0; i< summary.size(); i++) {
-      btotal += summary.get(i).getNorthCount();
+    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    int total = 0;
+    for (CountSummary aSummary : summary) {
+      total += aSummary.getNorthCount();
     }
-    Assert.assertEquals(2254, btotal);
+    Assert.assertEquals(2254, total);
   }
 
   @Test
@@ -118,23 +120,23 @@ public class VehicleSurveyTest {
     vs.saveResults("output","test_20_minutes.csv");
     vs.loadSummary("FIFTEEN_MINUTES", false);
     vs.saveResults("output","test_15_minutes.csv");
-    ArrayList<VehicleSurvey.CountSummary> summary = vs.getCountSummary();
-    int btotal = 0;
-    for (int i=0; i< summary.size(); i++) {
-      btotal += summary.get(i).getNorthCount();
+    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    int total = 0;
+    for (CountSummary aSummary : summary) {
+      total += aSummary.getNorthCount();
     }
-    Assert.assertEquals(11276, btotal);
+    Assert.assertEquals(11276, total);
   }
 
   @Test
   public final void whenAverageHourlySpeedIsCorrectAllDays() {
     vs.loadSummary("HOUR", false);
-    ArrayList<VehicleSurvey.CountSummary> summary = vs.getCountSummary();
-    double btotal = 0;
-    for (int i=0; i< summary.size(); i++) {
-      btotal += summary.get(i).getNorthSpeed();
+    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    double total = 0;
+    for (CountSummary aSummary : summary) {
+      total += aSummary.getNorthSpeed();
     }
-    Assert.assertEquals(62, btotal / summary.size(), 2.0);
+    Assert.assertEquals(62, total / summary.size(), 2.0);
   }
 
 }
