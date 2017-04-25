@@ -2,24 +2,12 @@ package au.com.terryflander;
 
 import java.util.ArrayList;
 
-class VehicleSurvey {
+public class VehicleSurvey {
 
   private EventDataSource counterEvents;
-  private ReportPeriods countPeriods;
+  private ReportPeriods countPeriods = new ReportPeriods();
   private Vehicles vehicles;
   private ArrayList<ReportSummary.CountSummary> countSummary;
-
-  public void main( String[] args ) {
-    if (args.length < 2) {
-      System.err.println("VehicleSummary usage: <load-file> <save-directory> [average]");
-      System.exit(1);
-    } else {
-      String loadFile = args[0];
-      String saveDirectory = args[1];
-      boolean average = args.length == 3;
-      processEventData(loadFile, saveDirectory, average);
-    }
-  }
 
   private void processEventData(String loadFile, String saveDirectory, boolean average) {
     VehicleSurvey vs = new VehicleSurvey();
@@ -40,7 +28,6 @@ class VehicleSurvey {
 
   public void init(String inFile) {
     try {
-      this.countPeriods = new ReportPeriods();
       this.counterEvents = new EventDataSource(inFile);
       this.vehicles = new Vehicles(this.counterEvents);
     } catch (Exception e) {
@@ -80,18 +67,21 @@ class VehicleSurvey {
 
   public int[] countPerPeriod(String direction, String period, String selectDays) {
     loadSummary(period, false);
-    int bucketsPerDay = countSummary.size() / (selectDays.equals("*")?1:this.vehicles.getNumDays());
-    int result[] = new int[bucketsPerDay];
-    for (int i = 0; i<countSummary.size(); i++) {
+    int bucketsPerDay =
+        countSummary.size() / (selectDays.equals("*") ? 1 : this.vehicles.getNumDays());
+    int[] result = new int[bucketsPerDay];
+    for (int i = 0; i < countSummary.size(); i++) {
       int j = i % bucketsPerDay;
-      result[j] += direction.equals("B")?countSummary.get(i).getNorthCount():countSummary.get(i).getSouthCount();
+      result[j] +=
+          direction.equals("B") ? countSummary.get(i).getNorthCount()
+              : countSummary.get(i).getSouthCount();
     }
     return result;
   }
 
   public void loadSummary(String period, boolean average) {
-    if (this.countPeriods.containsKey(period)) {
-      ReportSummary summary = new ReportSummary(this.countPeriods.getMinutesPerPeriod(period), average,
+    if (countPeriods.containsKey(period)) {
+      ReportSummary summary = new ReportSummary(countPeriods.getMinutesPerPeriod(period), average,
           this.vehicles);
       countSummary = summary.getCountSummary();
     }

@@ -1,10 +1,10 @@
 package au.com.terryflander;
 
 import au.com.terryflander.ReportSummary.CountSummary;
+import java.util.ArrayList;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
-import java.util.ArrayList;
 
 public class VehicleSurveyTest {
 
@@ -43,15 +43,16 @@ public class VehicleSurveyTest {
 
   @Test
   public final void whenNorthCarTotalIsCorrect() {
-    Assert.assertEquals(11276, vs.countPerPeriod("B", "AM_PM")[0] + vs.countPerPeriod("B", "AM_PM")[1]);
+    Assert.assertEquals(11276, vs.countPerPeriod("B", "AM_PM")[0]
+        + vs.countPerPeriod("B", "AM_PM")[1]);
   }
 
   @Test
   public final void whenNorthCarTotalIsCorrectAllDays() {
-    int summary[] = vs.countPerPeriod("B", "AM_PM", "*");
+    int[] periods = vs.countPerPeriod("B", "AM_PM", "*");
     int total = 0;
-    for (int aSummary : summary) {
-      total += aSummary;
+    for (int period : periods) {
+      total += period;
     }
     Assert.assertEquals(11276, total);
   }
@@ -73,26 +74,26 @@ public class VehicleSurveyTest {
 
   @Test
   public final void whenVehicleCountHalfHoursAreCorrect() {
-    Assert.assertEquals(2*24, vs.countPerPeriod("A", "HALF_HOUR", "1").length);
+    Assert.assertEquals(2 * 24, vs.countPerPeriod("A", "HALF_HOUR", "1").length);
   }
 
   @Test
   public final void whenVehicleCountTwentyMinutesAreCorrect() {
-    Assert.assertEquals(3*24, vs.countPerPeriod("A", "TWENTY_MINUTES", "1").length);
+    Assert.assertEquals(3 * 24, vs.countPerPeriod("A", "TWENTY_MINUTES", "1").length);
   }
 
   @Test
   public final void whenVehicleCountFifteenMinutesAreCorrect() {
-    Assert.assertEquals(4*24, vs.countPerPeriod("A", "FIFTEEN_MINUTES", "1").length);
+    Assert.assertEquals(4 * 24, vs.countPerPeriod("A", "FIFTEEN_MINUTES", "1").length);
   }
 
   @Test
   public final void whenNorthCarSummaryIsCorrectAllDays() {
     vs.loadSummary("AM_PM", false);
-    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    ArrayList<ReportSummary.CountSummary> periods = vs.getCountSummary();
     int total = 0;
-    for (CountSummary aSummary : summary) {
-      total += aSummary.getNorthCount();
+    for (CountSummary period : periods) {
+      total += period.getNorthCount();
     }
     Assert.assertEquals(11276, total);
   }
@@ -100,10 +101,10 @@ public class VehicleSurveyTest {
   @Test
   public final void whenNorthCarSummaryAverageIsCorrectAllDays() {
     vs.loadSummary("AM_PM", true);
-    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    ArrayList<ReportSummary.CountSummary> periods = vs.getCountSummary();
     int total = 0;
-    for (CountSummary aSummary : summary) {
-      total += aSummary.getNorthCount();
+    for (CountSummary period : periods) {
+      total += period.getNorthCount();
     }
     Assert.assertEquals(2254, total);
   }
@@ -120,10 +121,10 @@ public class VehicleSurveyTest {
     vs.saveResults("output","test_20_minutes.csv");
     vs.loadSummary("FIFTEEN_MINUTES", false);
     vs.saveResults("output","test_15_minutes.csv");
-    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    ArrayList<ReportSummary.CountSummary> periods = vs.getCountSummary();
     int total = 0;
-    for (CountSummary aSummary : summary) {
-      total += aSummary.getNorthCount();
+    for (CountSummary period : periods) {
+      total += period.getNorthCount();
     }
     Assert.assertEquals(11276, total);
   }
@@ -131,12 +132,12 @@ public class VehicleSurveyTest {
   @Test
   public final void whenAverageHourlySpeedIsCorrectAllDays() {
     vs.loadSummary("HOUR", false);
-    ArrayList<ReportSummary.CountSummary> summary = vs.getCountSummary();
+    ArrayList<ReportSummary.CountSummary> periods = vs.getCountSummary();
     double total = 0;
-    for (CountSummary aSummary : summary) {
-      total += aSummary.getNorthSpeed();
+    for (CountSummary period : periods) {
+      total += period.getNorthSpeed();
     }
-    Assert.assertEquals(62, total / summary.size(), 2.0);
+    Assert.assertEquals(62, total / periods.size(), 2.0);
   }
 
 }

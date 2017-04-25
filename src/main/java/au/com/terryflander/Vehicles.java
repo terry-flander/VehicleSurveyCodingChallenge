@@ -4,9 +4,9 @@ import au.com.terryflander.EventDataSource.CounterEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-class Vehicles {
+public class Vehicles {
 
-  private final ArrayList<Vehicle> vehicles;
+  private ArrayList<Vehicle> vehicles;
   private int numDays = 0;
 
   public Vehicles(EventDataSource counterEvents) {
@@ -14,7 +14,7 @@ class Vehicles {
     this.numDays = counterEvents.getNumDays();
 
     int i = counterEvents.getEvents().size() - 1;
-    long lastTime[] = new long[2];
+    long[] lastTime = new long[2];
     while (0 <= i) {
       String direction = counterEvents.getEvents().get(i).getDirection();
       Vehicle v = new Vehicle(direction);
@@ -95,7 +95,7 @@ class Vehicles {
     }
 
     public String getDirection() {
-        return this.direction;
+      return this.direction;
     }
 
     public long getEventTime() {

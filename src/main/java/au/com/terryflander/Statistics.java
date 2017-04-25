@@ -2,8 +2,7 @@ package au.com.terryflander;
 
 import java.util.Arrays;
 
-@SuppressWarnings("unused")
-class Statistics {
+public class Statistics {
   private final double[] data;
   private final int size;
 
@@ -14,17 +13,19 @@ class Statistics {
 
   private double getMean() {
     double sum = 0.0;
-    for(double a : data)
+    for (double a : data) {
       sum += a;
-    return sum/size;
+    }
+    return sum / size;
   }
 
   private double getVariance() {
     double mean = getMean();
     double temp = 0;
-    for(double a :data)
-      temp += (a-mean)*(a-mean);
-    return temp/size;
+    for (double a : data) {
+      temp += (a - mean) * (a - mean);
+    }
+    return temp / size;
   }
 
   public double getStdDev() {

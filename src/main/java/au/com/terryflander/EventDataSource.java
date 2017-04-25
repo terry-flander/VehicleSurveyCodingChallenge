@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-class EventDataSource {
+public class EventDataSource {
 
   private final ArrayList<CounterEvent> counterEvents;
   private int numDays = 0;
@@ -29,7 +29,7 @@ class EventDataSource {
     if (Files.exists(path)) {
       ArrayList<String> records;
       try {
-        records = (ArrayList<String>) Files.readAllLines(path, Charset.defaultCharset() );
+        records = (ArrayList<String>) Files.readAllLines(path, Charset.defaultCharset());
         int dayNumber = 0;
         long lastEventTime = 999999999;
         for (String record: records) {
@@ -47,7 +47,8 @@ class EventDataSource {
       }
     } else {
       File f = new File("./");
-      System.out.println("Load file not found: " + loadFile + " looking from " + f.getAbsolutePath());
+      System.out.println("Load file not found: " + loadFile + " looking from "
+          + f.getAbsolutePath());
       IOException e = new IOException("File not found: " + loadFile);
       throw e;
     }

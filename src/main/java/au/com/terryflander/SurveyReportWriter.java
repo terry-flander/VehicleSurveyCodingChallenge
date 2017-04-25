@@ -10,15 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-class SurveyReportWriter {
+public class SurveyReportWriter {
 
-  public static void saveResults(ArrayList<ReportSummary.CountSummary> countSummary, String dirName, String fileName) {
+  public static void saveResults(ArrayList<ReportSummary.CountSummary> countSummary,
+      String dirName, String fileName) {
     // Output Results
     PrintWriter pw;
     try {
       pw = saveData(dirName, fileName);
-      pw.println("Day,Hour,Minute,North Count,South Count,North Speed (km/hr),South Speed (km/hr),North Separation (M),South Separation (M),North Peak,South Peak");
-      for (ReportSummary.CountSummary fs: countSummary) {
+      pw.println("Day,Hour,Minute,North Count,South Count,North Speed (km/hr),South Speed (km/hr)"
+          + ",North Separation (M),South Separation (M),North Peak,South Peak");
+      for (ReportSummary.CountSummary fs : countSummary) {
         pw.println(fs.getDayNumber() + ","
             + fs.getHour() + ","
             + fs.getMinute() + ","
@@ -34,21 +36,23 @@ class SurveyReportWriter {
       }
       pw.close();
     } catch (Exception e) {
-      System.out.println("saveError: "+e.getMessage());
+      System.out.println("saveError: " + e.getMessage());
     }
 
   }
 
   @SuppressWarnings("SameParameterValue")
   private static double round(double value, int places) {
-    if (places < 0) throw new IllegalArgumentException();
+    if (places < 0) {
+      throw new IllegalArgumentException();
+    }
 
     BigDecimal bd = new BigDecimal(value);
     bd = bd.setScale(places, RoundingMode.HALF_DOWN);
     return bd.doubleValue();
   }
 
-  private static PrintWriter saveData (String dirName, String fileName) {
+  private static PrintWriter saveData(String dirName, String fileName) {
     if (fileName.equals("test")) {
       return writeTest();
     } else {
@@ -74,7 +78,8 @@ class SurveyReportWriter {
     PrintWriter result = null;
     Path path = FileSystems.getDefault().getPath(dirName + "/" + fileName);
     try {
-      result = new PrintWriter(Files.newBufferedWriter(path, java.nio.charset.StandardCharsets.UTF_8));
+      result =
+          new PrintWriter(Files.newBufferedWriter(path, java.nio.charset.StandardCharsets.UTF_8));
     } catch (IOException e) {
       System.out.println("writeFile: Could not " + e.getMessage());
     }

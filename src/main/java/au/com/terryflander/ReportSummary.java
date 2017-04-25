@@ -2,29 +2,39 @@ package au.com.terryflander;
 
 import java.util.ArrayList;
 
-class ReportSummary {
+public class ReportSummary {
   private final ArrayList<CountSummary> countSummary;
 
   public ReportSummary(int minutesPerPeriod, boolean average, Vehicles vehicles) {
     int numDays = vehicles.getNumDays();
-    this.countSummary = new ArrayList<>(getArraySize(minutesPerPeriod) * (average ? 1 : numDays));
+    this.countSummary =
+        new ArrayList<>(getArraySize(minutesPerPeriod) * (average ? 1 : numDays));
     for (int day = 0;day < numDays; day++) {
-      ArrayList<PeriodData> periodData = getPeriodData("A", minutesPerPeriod, String.valueOf(day + 1), vehicles);
+      ArrayList<PeriodData> periodData =
+          getPeriodData("A", minutesPerPeriod, String.valueOf(day + 1), vehicles);
       int offset = (day * periodData.size());
-      for (int i = 0; i<periodData.size(); i++) {
-        getSummary(offset, i, day, average, minutesPerPeriod).addSouthCount(periodData.get(i).getCount());
-        getSummary(offset, i, day, average, minutesPerPeriod).addSouthSpeed(periodData.get(i).getSpeed());
-        getSummary(offset, i, day, average, minutesPerPeriod).addSouthSeparation(periodData.get(i).getSeparation());
-        getSummary(offset, i, day, average, minutesPerPeriod).setSouthPeak(periodData.get(i).getPeak());
+      for (int i = 0; i < periodData.size(); i++) {
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).addSouthCount(periodData.get(i).getCount());
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).addSouthSpeed(periodData.get(i).getSpeed());
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).addSouthSeparation(periodData.get(i).getSeparation());
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).setSouthPeak(periodData.get(i).getPeak());
       }
 
       periodData = getPeriodData("B", minutesPerPeriod, String.valueOf(day + 1), vehicles);
       offset = (day * periodData.size());
-      for (int i = 0; i<periodData.size(); i++) {
-        getSummary(offset, i, day, average, minutesPerPeriod).addNorthCount(periodData.get(i).getCount());
-        getSummary(offset, i, day, average, minutesPerPeriod).addNorthSpeed(periodData.get(i).getSpeed());
-        getSummary(offset, i, day, average, minutesPerPeriod).addNorthSeparation(periodData.get(i).getSeparation());
-        getSummary(offset, i, day, average, minutesPerPeriod).setNorthPeak(periodData.get(i).getPeak());
+      for (int i = 0; i < periodData.size(); i++) {
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).addNorthCount(periodData.get(i).getCount());
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).addNorthSpeed(periodData.get(i).getSpeed());
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).addNorthSeparation(periodData.get(i).getSeparation());
+        getSummary(offset, i, day, average,
+            minutesPerPeriod).setNorthPeak(periodData.get(i).getPeak());
       }
     }
 
@@ -49,7 +59,9 @@ class ReportSummary {
     return (24 * 60 * 60) / minutesPerPeriod;
   }
 
-  private ArrayList<PeriodData> getPeriodData(String direction, int minutesPerPeriod, String selectDays, Vehicles vehicles) {
+  private ArrayList<PeriodData> getPeriodData(
+      String direction,
+      int minutesPerPeriod, String selectDays, Vehicles vehicles) {
     ArrayList<PeriodData> result = new ArrayList<>();
     for (Vehicles.Vehicle vehicle : vehicles.getVehicles()) {
       if (vehicle.getDirection().equals(direction)) {
@@ -74,12 +86,19 @@ class ReportSummary {
     return result;
   }
 
-  private CountSummary getSummary(int offset, int i, int day, boolean average, int minutesPerPeriod) {
-    if (this.countSummary.size() < (average?0:offset) + i + 1) {
+  private CountSummary getSummary(
+      int offset,
+      int i,
+      int day,
+      boolean average, int minutesPerPeriod) {
+    if (this.countSummary.size() < (average ? 0 : offset) + i + 1) {
       this.countSummary.add(offset + i,
-          new CountSummary(average?0:day, calculateHour(minutesPerPeriod, i), calculateMinute(minutesPerPeriod, i)));
+          new CountSummary(
+              average ? 0 : day,
+              calculateHour(minutesPerPeriod, i),
+              calculateMinute(minutesPerPeriod, i)));
     }
-    return this.countSummary.get((average?0:offset) + i);
+    return this.countSummary.get((average ? 0 : offset) + i);
   }
 
   private int calculateHour(int minutesPerPeriod, int offset) {
@@ -100,7 +119,7 @@ class ReportSummary {
 
   private double getStandardDeviation(ArrayList<PeriodData> data) {
     double[] count = new double[data.size()];
-    for (int i=0; i<data.size();i++) {
+    for (int i = 0; i < data.size();i++) {
       count[i] = data.get(i).count;
     }
     return new Statistics(count).getStdDev();
@@ -206,11 +225,11 @@ class ReportSummary {
     }
 
     public double getNorthSpeed() {
-      return this.northSpeed / (this.northCount!=0?this.northCount:1);
+      return this.northSpeed / (this.northCount != 0 ? this.northCount : 1);
     }
 
     public double getSouthSpeed() {
-      return this.southSpeed / (this.southCount!=0?this.southCount:1);
+      return this.southSpeed / (this.southCount != 0 ? this.southCount : 1);
     }
 
     public double getNorthSpeedRaw() {
@@ -238,11 +257,11 @@ class ReportSummary {
     }
 
     public double getNorthSeparation() {
-      return this.northSeparation / (this.northCount!=0?this.northCount:1);
+      return this.northSeparation / (this.northCount != 0 ? this.northCount : 1);
     }
 
     public double getSouthSeparation() {
-      return this.southSeparation / (this.southCount!=0?this.southCount:1);
+      return this.southSeparation / (this.southCount != 0 ? this.southCount : 1);
     }
 
     public double getNorthSeparationRaw() {
