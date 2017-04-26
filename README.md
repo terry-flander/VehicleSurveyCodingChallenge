@@ -11,7 +11,9 @@ The application VehicleSurveyCodingChallenge is designed to take as its input Ve
 
 ## Build
 
-* mvn clean package
+* Maven -- mvn clean package
+
+* Gradle -- gradle build
 
 This will compile the source and run the test package using the included test file 'Vehicle Survey Coding Challenge sample data.txt'. Output will be generated in the 'output' directory which will be created automatically. The output files are named for their contents, i.e. test_am_pm.csv, test_1_hour.csv, test_half_hour.csv, test_20_minutes.csv, test_15_minutes.csv.
 
@@ -22,13 +24,22 @@ Day Number, Hour, Minute, North Count, South Count, North Speed (km/hr), South S
 
 The suite of tests can be re-run at any time with:
 
-* mvn exec:java -Dexec.args="test ."
+* Maven -- mvn exec:java -Dexec.args="test ."
+
+* Gradle -- ./gradlew test
 
 ## Run
 
 The application expects at least two arguments: Input file name (including relative directory), and the Output directory. If the output directory does not exist, the program will create it. If the optional third argement 'average' is supplied, the output files will contain the averages of all values for all days in the input file.
 
 E.g.
-* mvn exec:java -Dexec.args="Vehicle_Survey_Coding_Challenge_sample_data.txt tmp"
+* Maven -- mvn exec:java -Dexec.args="Vehicle_Survey_Coding_Challenge_sample_data.txt tmp"
+
+* Gradle -- gradle execute -Dexec.args="Vehicle_Survey_Coding_Challenge_sample_data.txt tmp"
 
 This will run the VehicleSurveyCodingChallenge main class and produce output CSV files the Output directory 'tmp'. As this file is identical to the original test data, the output in that directory should match the output created during 'test' processing in the 'output' directory.
+
+## Run Jar directly
+
+java -jar vehicleSurvey-1.0.jar ../Vehicle_Survey_Coding_Challenge_sample_data.txt .
+

@@ -1,6 +1,6 @@
 package au.com.terryflander;
 
-class VehicleSurveyMain {
+public class VehicleSurveyMain {
 
   public static void main(String[] args) {
     if (args.length < 2) {

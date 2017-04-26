@@ -1,6 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'checkstyle'
+apply plugin:'application'
+
+//noinspection GroovyUnusedAssignment
+mainClassName = "au.com.terryflander.VehicleSurveyMain"
 
 //noinspection GroovyUnusedAssignment
 group = 'au.com.terryflander'
@@ -24,6 +28,14 @@ checkstyle {
 
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
+}
+
+task execute(type:JavaExec) {
+    main = mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    if(project.hasProperty('exec.args')) {
+        args System.getProperty("exec.args").split()
+    }
 }
 
 repositories {
