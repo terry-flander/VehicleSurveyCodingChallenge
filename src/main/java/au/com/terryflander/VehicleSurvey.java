@@ -2,29 +2,12 @@ package au.com.terryflander;
 
 import java.util.ArrayList;
 
-public class VehicleSurvey {
+class VehicleSurvey {
 
   private EventDataSource counterEvents;
-  private ReportPeriods countPeriods = new ReportPeriods();
+  private final ReportPeriods countPeriods = new ReportPeriods();
   private Vehicles vehicles;
   private ArrayList<ReportSummary.CountSummary> countSummary;
-
-  private void processEventData(String loadFile, String saveDirectory, boolean average) {
-    VehicleSurvey vs = new VehicleSurvey();
-    vs.init(loadFile);
-    if (this.counterEvents.getEvents().size() > 0) {
-      vs.loadSummary("AM_PM", average);
-      vs.saveResults(saveDirectory, "stats_am_pm.csv");
-      vs.loadSummary("HOUR", average);
-      vs.saveResults(saveDirectory, "stats_1_hour.csv");
-      vs.loadSummary("HALF_HOUR", average);
-      vs.saveResults(saveDirectory, "stats_half_hour.csv");
-      vs.loadSummary("TWENTY_MINUTES", average);
-      vs.saveResults(saveDirectory, "stats_20_minutes.csv");
-      vs.loadSummary("FIFTEEN_MINUTES", average);
-      vs.saveResults(saveDirectory, "stats_15_minutes.csv");
-    }
-  }
 
   public void init(String inFile) {
     try {
@@ -61,7 +44,7 @@ public class VehicleSurvey {
     return this.vehicles.getNumDays();
   }
 
-  public int[] countPerPeriod(String direction, String period) {
+  public int[] countPerPeriod(String direction, @SuppressWarnings("SameParameterValue") String period) {
     return countPerPeriod(direction, period, "1");
   }
 

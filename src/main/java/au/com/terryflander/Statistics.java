@@ -2,7 +2,7 @@ package au.com.terryflander;
 
 import java.util.Arrays;
 
-public class Statistics {
+class Statistics {
   private final double[] data;
   private final int size;
 
@@ -32,6 +32,7 @@ public class Statistics {
     return Math.sqrt(getVariance());
   }
 
+  @SuppressWarnings("unused")
   private double median() {
     Arrays.sort(data);
 

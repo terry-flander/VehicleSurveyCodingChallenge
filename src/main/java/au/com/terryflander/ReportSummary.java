@@ -2,7 +2,13 @@ package au.com.terryflander;
 
 import java.util.ArrayList;
 
-public class ReportSummary {
+/**
+ *  The purpose of this class is to process the Vehicles into the ArrayList CountSummary for the
+ *  required report period minutes. Either returns all days data or if average=true combines
+ *  into single day with values averaged over the total number of days.
+ **/
+
+class ReportSummary {
   private final ArrayList<CountSummary> countSummary;
 
   public ReportSummary(int minutesPerPeriod, boolean average, Vehicles vehicles) {

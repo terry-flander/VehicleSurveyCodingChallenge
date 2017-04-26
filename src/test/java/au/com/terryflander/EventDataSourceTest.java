@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class EventDataSourceTest {
 
-  EventDataSource eds;
+  private EventDataSource eds;
 
   @Before
   public void initialize() {
@@ -77,4 +77,25 @@ public class EventDataSourceTest {
     CounterEvent ev = new EventDataSource.CounterEvent("A",1000L,1);
     Assert.assertEquals(1, ev.getDayNumber());
   }
+
+  @Test
+  public final void whenMockReadTestFileCountIsCorrect() {
+    try {
+      EventDataSource eds = new EventDataSource("mock");
+      Assert.assertEquals(42, eds.getEvents().size());
+    } catch (Exception e) {
+      System.out.println("EventDataSource MOCK create error: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public final void whenMockDayNumberIsCorrect() {
+    try {
+      EventDataSource eds = new EventDataSource("mock");
+      Assert.assertEquals(3, eds.getNumDays());
+    } catch (Exception e) {
+      System.out.println("EventDataSource MOCK create error: " + e.getMessage());
+    }
+  }
+
 }

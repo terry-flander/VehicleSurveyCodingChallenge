@@ -1,8 +1,6 @@
 package au.com.terryflander;
 
-import java.util.ArrayList;
-
-public class VehicleSurveyMain {
+class VehicleSurveyMain {
 
   public static void main(String[] args) {
     if (args.length < 2) {

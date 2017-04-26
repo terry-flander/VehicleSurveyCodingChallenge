@@ -2,7 +2,11 @@ package au.com.terryflander;
 
 import java.util.HashMap;
 
-public class ReportPeriods {
+/**
+ *  The purpose of this class is to identify valid reporting periods based on Name.
+ **/
+
+class ReportPeriods {
 
   private final HashMap<String, Integer> countPeriods;
 

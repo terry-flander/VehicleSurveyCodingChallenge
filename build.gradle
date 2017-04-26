@@ -2,16 +2,22 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'checkstyle'
 
+//noinspection GroovyUnusedAssignment
 group = 'au.com.terryflander'
+//noinspection GroovyUnusedAssignment
 version = '1.0'
 
+//noinspection GroovyUnusedAssignment
 description = """vehicleSurvey"""
 
+//noinspection GroovyUnusedAssignment
 sourceCompatibility = 1.8
+//noinspection GroovyUnusedAssignment
 targetCompatibility = 1.8
 
 checkstyle {
     config = resources.text.fromFile('checkstyle.xml', 'UTF-8')
+    sourceSets = [project.sourceSets.main]
     showViolations = true
     ignoreFailures = false
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class ReportPeriodsTest {
 
-  ReportPeriods rp;
+  private ReportPeriods rp;
 
   @Before
   public void initialize() {

@@ -4,9 +4,9 @@ import au.com.terryflander.EventDataSource.CounterEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Vehicles {
+class Vehicles {
 
-  private ArrayList<Vehicle> vehicles;
+  private final ArrayList<Vehicle> vehicles;
   private int numDays = 0;
 
   public Vehicles(EventDataSource counterEvents) {

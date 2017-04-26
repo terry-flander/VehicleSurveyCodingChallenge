@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class SurveyReportWriter {
+class SurveyReportWriter {
 
   public static void saveResults(ArrayList<ReportSummary.CountSummary> countSummary,
       String dirName, String fileName) {
