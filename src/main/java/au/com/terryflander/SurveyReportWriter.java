@@ -10,6 +10,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+/**
+ The purpose of this class is to output the count summary data in a CSV format suitable to import
+ into a spread sheet program.
+ **/
 class SurveyReportWriter {
 
   public static void saveResults(ArrayList<ReportSummary.CountSummary> countSummary,

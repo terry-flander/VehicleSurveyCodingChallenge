@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *  The purpose of this class is to create an ArrayList of CounterEvent object for processing.
+  The purpose of this class is to create an ArrayList of CounterEvent object for processing.
  **/
 
 class EventDataSource {
@@ -19,15 +19,15 @@ class EventDataSource {
   private int numDays = 0;
 
   /**
-   * The purpose of this method is to construct Class with the desired data
-   *
-   *  @param inFile -- the type of data to load.
-    *  "mock"   -- Will load counterEvents with internal Mock data.
-    *  "test"   -- Will load counterEvents from supplied test data file.
-    *  fileName -- Will attempt to load counterEvents from a file with the specified name which must
-    *              be accessible from the run directory. Will throw IOException if not available or
-   *              able to be read.
-  **/
+    The purpose of this method is to construct Class with the desired data
+
+    @param inFile -- the type of data to load.
+    "mock"   -- Will load counterEvents with internal Mock data.
+    "test"   -- Will load counterEvents from supplied test data file.
+    fileName -- Will attempt to load counterEvents from a file with the specified name which must
+                be accessible from the run directory. Will throw IOException if not available or
+               able to be read.
+  */
   public EventDataSource(String inFile) throws IOException {
 
     this.counterEvents = new ArrayList<>();

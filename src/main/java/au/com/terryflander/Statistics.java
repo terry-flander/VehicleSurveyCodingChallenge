@@ -2,6 +2,11 @@ package au.com.terryflander;
 
 import java.util.Arrays;
 
+/**
+ The purpose of this class is to provide the calculation of Standard Deviation for use
+ in the 'Peak Period' requirement.
+ **/
+
 class Statistics {
   private final double[] data;
   private final int size;

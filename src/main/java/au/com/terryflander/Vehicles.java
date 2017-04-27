@@ -4,6 +4,14 @@ import au.com.terryflander.EventDataSource.CounterEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ The purpose of this class is to encapsulate all information about vehicles. Each vehicle
+ is an instance of the Vehicle class held in the enclosing vehicles Array. Vehicles need
+ to be considered together as the meaning of their separation distance only has relevence
+ which considered toghther. In addition, the process of counting and summarisation must consideer
+ all Vehicles at the same time.
+ **/
+
 class Vehicles {
 
   private final ArrayList<Vehicle> vehicles;
